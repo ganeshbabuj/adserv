@@ -1,4 +1,4 @@
 # adserv
 
 Use postman collection:
-https://www.getpostman.com/collections/28446f90d040fc828206
+https://www.getpostman.com/collections/8d9cff8e0a669c9432ef
