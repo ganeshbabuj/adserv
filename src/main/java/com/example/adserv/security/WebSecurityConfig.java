@@ -1,5 +1,6 @@
 package com.example.adserv.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private JWTProvider jwtProvider;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -21,8 +25,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()//
                 .antMatchers("/v1/marketing/activate").permitAll()
-                // Disallow everything else..
                 .anyRequest().authenticated();
+
+
+        // Add JWT Filter
+        http.apply(new JWTSecurityConfigurerAdapter(jwtProvider));
     }
 
 }
